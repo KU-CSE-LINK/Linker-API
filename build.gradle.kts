@@ -4,10 +4,18 @@ plugins {
     id("org.springframework.boot") version "3.4.1"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
+    kotlin("kapt") version "1.7.20"
+}
+
+allOpen {
+    annotations(
+        "jakarta.persistence.Entity",
+        "jakarta.persistence.MappedSuperclass",
+        "jakarta.persistence.Embedabble"
+    )
 }
 
 group = "com.linker"
-version = "0.0.1-SNAPSHOT"
 
 java {
     toolchain {
