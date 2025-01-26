@@ -1,3 +1,9 @@
 spring:
   liquibase:
     change-log: classpath:db/changelog-master.yaml
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5678/linker-database
+    username: myuser
+    password: mypassword
+    
