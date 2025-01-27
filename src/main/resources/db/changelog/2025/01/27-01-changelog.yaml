@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1737981604957-1
+      author: ji-inpark
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_equipment
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: total_stock
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: available_stock
+                  type: INT
+            tableName: equipment
+
