@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class EquipmentService(
-    private val equipmentRepository: EquipmentRepository) {
-        fun getAvailableEquipment(): List<Equipment> {
-            return equipmentRepository.findAll().filter { it.availableStock>0 }
-        }
+    private val equipmentRepository: EquipmentRepository
+) {
+    fun getEquipments(): List<Equipment> {
+        return equipmentRepository.findAll()
+    }
 }
