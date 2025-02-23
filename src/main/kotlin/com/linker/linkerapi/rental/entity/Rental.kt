@@ -13,7 +13,7 @@ class Rental(
     val equipment: Equipment,
     val phoneNumber: String,
     val name: String,
-    val studentId: Int,
+    val studentId: Long,
     val rentalType: RentalType,
-    var status: RentalStatus = RentalStatus.신청
+    var status: RentalStatus = RentalStatus.REQUESTED
 ) : BaseEntity()

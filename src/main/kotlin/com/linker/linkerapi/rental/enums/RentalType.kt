@@ -1,6 +1,6 @@
 package com.linker.linkerapi.rental.enums
 
 enum class RentalType {
-    단기,
-    장기
+    SHORT_TERM,      // 단기
+    LONG_TERM        // 장기
 }

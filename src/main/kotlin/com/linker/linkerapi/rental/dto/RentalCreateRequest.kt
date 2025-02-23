@@ -6,6 +6,6 @@ data class RentalCreateRequest(
     val equipmentId: Long,
     val phoneNumber: String,
     val name: String,
-    val studentId: Int,
+    val studentId: Long,
     val rentalType: RentalType
 )
