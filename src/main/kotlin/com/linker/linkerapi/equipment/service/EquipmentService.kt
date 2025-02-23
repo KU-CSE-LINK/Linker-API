@@ -11,4 +11,9 @@ class EquipmentService(
     fun getEquipments(): List<Equipment> {
         return equipmentRepository.findAll()
     }
+
+    fun getEquipmentById(equipmentId: Long): Equipment {
+        return equipmentRepository.findById(equipmentId)
+            .orElseThrow { RuntimeException("Equipment not found with id: $equipmentId") }
+    }
 }
