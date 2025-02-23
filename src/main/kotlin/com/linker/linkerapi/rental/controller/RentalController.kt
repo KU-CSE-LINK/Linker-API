@@ -15,7 +15,7 @@ class RentalController(
     private val rentalService: RentalService
 ) {
     @Operation(summary = "대여 신청", description = "기자재 대여 신청을 처리합니다.")
-    @PostMapping("/rentals")
+    @PostMapping("/rental")
     fun createRental(@RequestBody request: RentalCreateRequest): Rental {
         return rentalService.createRental(
             request.equipmentId,

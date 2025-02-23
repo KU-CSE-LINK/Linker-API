@@ -16,9 +16,10 @@ class RentalService(
         phoneNumber: String,
         name: String,
         studentId: Long,
-        rentalType: RentalType
+        rentalTypeStr: String
     ): Rental {
         val equipment = equipmentService.getEquipmentById(equipmentId)
+        val rentalType = RentalType.valueOf(rentalTypeStr)
         val rental = Rental(
             equipment = equipment,
             phoneNumber = phoneNumber,

@@ -1,11 +1,9 @@
 package com.linker.linkerapi.rental.dto
 
-import com.linker.linkerapi.rental.enums.RentalType
-
 data class RentalCreateRequest(
     val equipmentId: Long,
     val phoneNumber: String,
     val name: String,
     val studentId: Long,
-    val rentalType: RentalType
+    val rentalType: String
 )
