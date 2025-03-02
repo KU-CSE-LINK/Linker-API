@@ -4,9 +4,8 @@ import com.linker.linkerapi.rental.entity.Rental
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface RentalRepository : JpaRepository<Rental, Long> {
-    fun findByStudentIdAndPhoneNumberAndName(
+    fun findAllByStudentIdAndName(
         studentId: Long,
-        phoneNumber: String,
         name: String
     ): List<Rental>
 }
