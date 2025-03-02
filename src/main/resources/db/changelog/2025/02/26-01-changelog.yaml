@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1740567258041-1
+      author: ji-inpark
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_rental
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+              - column:
+                  name: equipment_id
+                  type: BIGINT
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: student_id
+                  type: BIGINT
+              - column:
+                  name: rental_type
+                  type: SMALLINT
+              - column:
+                  name: status
+                  type: SMALLINT
+            tableName: rental
+  - changeSet:
+      id: 1740567258041-2
+      author: ji-inpark
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: equipment_id
+            baseTableName: rental
+            constraintName: FK_RENTAL_ON_EQUIPMENT
+            referencedColumnNames: id
+            referencedTableName: equipment
+
