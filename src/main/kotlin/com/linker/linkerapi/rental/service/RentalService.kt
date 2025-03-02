@@ -29,4 +29,8 @@ class RentalService(
         )
         return rentalRepository.save(rental)
     }
+
+    fun getRentalsByUserInfo(name: String, studentId: Long): List<Rental> {
+        return rentalRepository.findAllByStudentIdAndName(studentId, name)
+    }
 }
