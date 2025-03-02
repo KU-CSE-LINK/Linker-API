@@ -1,10 +1,13 @@
 package com.linker.linkerapi.rental.controller
 
 import com.linker.linkerapi.rental.dto.RentalCreateRequest
+import com.linker.linkerapi.rental.dto.RentalQueryRequest
+import com.linker.linkerapi.rental.dto.RentalResponse
 import com.linker.linkerapi.rental.entity.Rental
 import com.linker.linkerapi.rental.service.RentalService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -24,5 +27,18 @@ class RentalController(
             request.studentId,
             request.rentalType
         )
+    }
+
+    @Operation(summary = "본인 신청 내역 조회", description = "학번, 전화번호, 이름을 모두 입력하여 대여 신청 내역을 조회합니다.")
+    @PostMapping("/rental/my-rental")
+    fun getMyRentals(@RequestBody request: RentalQueryRequest): ResponseEntity<Any> {
+        try {
+            val rentals = rentalService.getRentalsByUserInfo(request)
+            val response = rentals.map { RentalResponse.from(it) }
+            return ResponseEntity.ok(response)
+        } catch (e: IllegalArgumentException) {
+            val errorResponse = mapOf("error" to e.message)
+            return ResponseEntity.badRequest().body(errorResponse)
+        }
     }
 }

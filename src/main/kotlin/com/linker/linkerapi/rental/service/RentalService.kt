@@ -1,6 +1,7 @@
 package com.linker.linkerapi.rental.service
 
 import com.linker.linkerapi.equipment.service.EquipmentService
+import com.linker.linkerapi.rental.dto.RentalQueryRequest
 import com.linker.linkerapi.rental.entity.Rental
 import com.linker.linkerapi.rental.enums.RentalType
 import com.linker.linkerapi.rental.repository.RentalRepository
@@ -28,5 +29,17 @@ class RentalService(
             rentalType = rentalType
         )
         return rentalRepository.save(rental)
+    }
+
+    fun getRentalsByUserInfo(request: RentalQueryRequest): List<Rental> {
+        if (!request.isValid()) {
+            throw IllegalArgumentException("모든 필드(학번, 전화번호, 이름)가 입력되어야 합니다")
+        }
+
+        return rentalRepository.findByStudentIdAndPhoneNumberAndName(
+            request.studentId,
+            request.phoneNumber,
+            request.name
+        )
     }
 }
