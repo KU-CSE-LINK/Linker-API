@@ -6,4 +6,7 @@ spring:
     url: jdbc:postgresql://localhost:5678/linker-database
     username: myuser
     password: mypassword
-    
+
+discord:
+  webhook:
+    url: ${DISCORD_WEBHOOK_URL:}
