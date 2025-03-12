@@ -1,6 +1,6 @@
 package com.linker.linkerapi.notification.dto
 
-data class DiscordWebhookRequest(
+data class DiscordWebhookDto(
     val content: String? = null,
     val username: String? = null,
     val avatar_url: String? = null,

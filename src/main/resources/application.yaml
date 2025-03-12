@@ -9,4 +9,4 @@ spring:
 
 notification:
   discord:
-    webhook-url: ${DISCORD_WEBHOOK_URL:}
+    webhook-url: ${DISCORD_WEBHOOK_URL}

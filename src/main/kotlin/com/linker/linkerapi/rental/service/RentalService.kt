@@ -23,16 +23,15 @@ class RentalService(
         val equipment = equipmentService.getEquipmentById(equipmentId)
         val rentalType = RentalType.valueOf(rawRentalType)
 
-        val rental = Rental(
-            equipment = equipment,
-            phoneNumber = phoneNumber,
-            name = name,
-            studentId = studentId,
-            rentalType = rentalType
+        val savedRental = rentalRepository.save(
+            Rental(
+                equipment = equipment,
+                phoneNumber = phoneNumber,
+                name = name,
+                studentId = studentId,
+                rentalType = rentalType
+            )
         )
-
-        val savedRental = rentalRepository.save(rental)
-
         discordNotificationService.sendRentalRequestNotification(savedRental)
 
         return savedRental

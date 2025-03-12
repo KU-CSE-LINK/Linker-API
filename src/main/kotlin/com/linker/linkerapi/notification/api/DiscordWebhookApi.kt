@@ -1,15 +1,15 @@
 package com.linker.linkerapi.notification.api
 
-import com.linker.linkerapi.notification.dto.DiscordWebhookRequest
+import com.linker.linkerapi.notification.dto.DiscordWebhookDto
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Url
 
-interface DiscordWebhookService {
+interface DiscordWebhookApi {
     @POST
     fun executeWebhook(
         @Url webhookUrl: String,
-        @Body request: DiscordWebhookRequest
+        @Body request: DiscordWebhookDto
     ): Call<Void>
 }
