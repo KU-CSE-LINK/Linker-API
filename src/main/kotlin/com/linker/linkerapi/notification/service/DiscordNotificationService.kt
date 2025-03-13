@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class DiscordNotificationService(
-    @Value("\${notification.discord.webhook-url}")
+    @Value("\${retrofit.discord.webhook-url}")
     private val webhookUrl: String,
     private val discordWebhookApi: DiscordWebhookApi
 ) {
