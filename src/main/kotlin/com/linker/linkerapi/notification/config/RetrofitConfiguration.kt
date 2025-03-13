@@ -8,8 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
 @Configuration
-class NotificationConfig {
-    
+class RetrofitConfiguration {
+
     @Bean
     fun provideDiscordWebhookApi(
         objectMapper: ObjectMapper

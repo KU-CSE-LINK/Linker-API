@@ -7,6 +7,6 @@ spring:
     username: myuser
     password: mypassword
 
-notification:
+retrofit:
   discord:
     webhook-url: ${DISCORD_WEBHOOK_URL}
