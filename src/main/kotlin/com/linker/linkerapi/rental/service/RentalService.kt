@@ -6,6 +6,7 @@ import com.linker.linkerapi.rental.entity.Rental
 import com.linker.linkerapi.rental.enums.RentalType
 import com.linker.linkerapi.rental.repository.RentalRepository
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class RentalService(
@@ -22,6 +23,8 @@ class RentalService(
     ): Rental {
         val equipment = equipmentService.getEquipmentById(equipmentId)
         val rentalType = RentalType.valueOf(rawRentalType)
+        val rentalPeriod = if (rentalType == RentalType.SHORT_TERM) 7 else 30
+        val returnDate = LocalDate.now().plusDays(rentalPeriod.toLong()).atStartOfDay()
 
         val savedRental = rentalRepository.save(
             Rental(
@@ -29,6 +32,7 @@ class RentalService(
                 phoneNumber = phoneNumber,
                 name = name,
                 studentId = studentId,
+                returnDate = returnDate,
                 rentalType = rentalType
             )
         )
