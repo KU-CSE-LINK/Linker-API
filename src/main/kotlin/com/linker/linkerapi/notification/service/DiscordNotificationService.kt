@@ -51,4 +51,32 @@ class DiscordNotificationService(
 
         discordWebhookApi.executeWebhook(webhookUrl, webhookRequest).execute()
     }
+
+    fun sendLoginUrlNotification(code: String) {
+        // todo change url after implementing login
+        val url = code
+
+        val fields = listOf(
+            DiscordEmbedField(
+                name = "🔗 로그인 링크",
+                value = url
+            )
+        )
+
+        val embeds = listOf(
+            DiscordEmbed(
+                title = "🔔 새로운 로그인 링크",
+                description = "새로운 로그인 링크가 발급되었습니다.",
+                color = 0x00aaff,
+                fields = fields
+            )
+        )
+
+        val webhookRequest = DiscordWebhookDto(
+            username = "Linker 로그인 알림",
+            embeds = embeds
+        )
+
+        discordWebhookApi.executeWebhook(webhookUrl, webhookRequest).execute()
+    }
 }
