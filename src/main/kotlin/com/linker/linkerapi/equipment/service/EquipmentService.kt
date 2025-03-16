@@ -16,4 +16,20 @@ class EquipmentService(
         return equipmentRepository.findById(equipmentId)
             .orElseThrow { RuntimeException("Equipment not found with id: $equipmentId") }
     }
+
+    fun addEquipment(
+        name: String,
+        imageUrl: String,
+        totalStock: Int,
+        availableStock: Int
+    ): Equipment {
+        val equipment = Equipment(
+            name = name,
+            imageUrl = imageUrl,
+            totalStock = totalStock,
+            availableStock = availableStock
+        )
+
+        return equipmentRepository.save(equipment)
+    }
 }
