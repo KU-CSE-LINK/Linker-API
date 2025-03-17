@@ -4,6 +4,7 @@ import com.linker.linkerapi.auth.dto.LoginRequestBody
 import com.linker.linkerapi.auth.service.AuthService
 import com.linker.linkerapi.security.JwtProvider
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.boot.web.server.Cookie.SameSite
 import org.springframework.http.HttpHeaders
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
+@Tag(name = "Auth Controller")
 @RestController
 class AuthController(
     private val authService: AuthService,
