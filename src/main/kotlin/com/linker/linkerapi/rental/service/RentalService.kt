@@ -3,6 +3,7 @@ package com.linker.linkerapi.rental.service
 import com.linker.linkerapi.equipment.service.EquipmentService
 import com.linker.linkerapi.notification.service.DiscordNotificationService
 import com.linker.linkerapi.rental.entity.Rental
+import com.linker.linkerapi.rental.enums.RentalStatus
 import com.linker.linkerapi.rental.enums.RentalType
 import com.linker.linkerapi.rental.repository.RentalRepository
 import org.springframework.data.domain.Page
@@ -49,5 +50,13 @@ class RentalService(
 
     fun getRentals(page: Int, size: Int): Page<Rental> {
         return rentalRepository.findAll(PageRequest.of(page, size))
+    }
+
+    fun changeRentalStatus(id: Long, rawStatus: String): Rental {
+        val rental = rentalRepository.findById(id).get()
+        val status = RentalStatus.valueOf(rawStatus)
+
+        rental.status = status
+        return rentalRepository.save(rental)
     }
 }
