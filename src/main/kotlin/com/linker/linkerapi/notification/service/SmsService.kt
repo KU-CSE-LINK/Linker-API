@@ -16,7 +16,7 @@ class SmsService(
     @Value("\${coolsms.sender-number}")
     private val senderNumber: String
 ) {
-    fun sendSms(phoneNumber: String, content: String): JSONObject {
+    private fun sendSms(phoneNumber: String, content: String): JSONObject {
         val coolsms = Message(apiKey, apiSecret)
 
         val params = HashMap<String, String>()
