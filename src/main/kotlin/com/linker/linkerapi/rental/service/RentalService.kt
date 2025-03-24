@@ -47,8 +47,7 @@ class RentalService(
         discordNotificationService.sendRentalRequestNotification(savedRental)
 
         try {
-            val message = "[Linker 기자재 대여] ${name}님, ${equipment.name} 대여 신청이 접수되었습니다. 준비가 완료되면 문자로 알려드리겠습니다."
-            smsService.sendSms(phoneNumber, message)
+            smsService.sendRentalStatusNotification(savedRental)
         } catch (e: Exception) {
             logger.error("대여 신청 확인 SMS 발송 실패: ${e.message}", e)
         }
