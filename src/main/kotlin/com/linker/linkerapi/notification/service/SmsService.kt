@@ -5,6 +5,7 @@ import com.linker.linkerapi.rental.enums.RentalStatus
 import net.nurigo.java_sdk.api.Message
 import org.json.simple.JSONObject
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service
 
 @Service
@@ -28,6 +29,7 @@ class SmsService(
         return coolsms.send(params)
     }
 
+    @Profile("!local")
     fun sendRentalStatusNotification(rental: Rental) {
         val message = when (rental.status) {
             RentalStatus.REQUESTED -> "[Linker 기자재 대여] ${rental.name}님, ${rental.equipment.name} 대여 신청이 접수되었습니다. 준비가 완료되면 문자로 알려드리겠습니다."
