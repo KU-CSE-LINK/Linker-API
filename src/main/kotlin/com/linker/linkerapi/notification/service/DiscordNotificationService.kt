@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class DiscordNotificationService(
+    @Value("\${linker.base-url}")
+    private val baseUrl: String,
     @Value("\${retrofit.discord.webhook-url}")
     private val webhookUrl: String,
     private val discordWebhookApi: DiscordWebhookApi
@@ -53,8 +55,7 @@ class DiscordNotificationService(
     }
 
     fun sendLoginUrlNotification(code: String) {
-        // todo change url after implementing login
-        val url = code
+        val url = "$baseUrl/login?code=$code"
 
         val fields = listOf(
             DiscordEmbedField(
