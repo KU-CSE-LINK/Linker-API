@@ -9,8 +9,6 @@ import com.linker.linkerapi.rental.enums.RentalType
 import com.linker.linkerapi.rental.exception.RentalNotFoundException
 import com.linker.linkerapi.rental.repository.RentalRepository
 import org.slf4j.LoggerFactory
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -65,8 +63,8 @@ class RentalService(
         return rentalRepository.findAllByStudentIdAndName(studentId, name)
     }
 
-    fun getRentals(page: Int, size: Int): Page<Rental> {
-        return rentalRepository.findAll(PageRequest.of(page, size))
+    fun getAllRentals(): List<Rental> {
+        return rentalRepository.findAll()
     }
 
     fun changeRentalStatus(id: Long, rawStatus: String): Rental {
