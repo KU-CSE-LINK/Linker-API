@@ -6,6 +6,7 @@ import com.linker.linkerapi.notification.service.SmsService
 import com.linker.linkerapi.rental.entity.Rental
 import com.linker.linkerapi.rental.enums.RentalStatus
 import com.linker.linkerapi.rental.enums.RentalType
+import com.linker.linkerapi.rental.exception.RentalNotFoundException
 import com.linker.linkerapi.rental.repository.RentalRepository
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
@@ -55,6 +56,11 @@ class RentalService(
         return savedRental
     }
 
+    fun getRentalById(id: Long): Rental {
+        return rentalRepository.findById(id)
+            .orElseThrow { RentalNotFoundException() }
+    }
+
     fun getRentalsByUserInfo(name: String, studentId: Long): List<Rental> {
         return rentalRepository.findAllByStudentIdAndName(studentId, name)
     }
@@ -74,7 +80,10 @@ class RentalService(
             try {
                 smsService.sendRentalStatusNotification(savedRental)
             } catch (e: Exception) {
-                logger.error("대여 상태 변경 SMS 발송 실패 - 대여ID: ${savedRental.id}, 상태: ${status}, 오류: ${e.message}", e)
+                logger.error(
+                    "대여 상태 변경 SMS 발송 실패 - 대여ID: ${savedRental.id}, 상태: ${status}, 오류: ${e.message}",
+                    e
+                )
             }
 
             return savedRental
