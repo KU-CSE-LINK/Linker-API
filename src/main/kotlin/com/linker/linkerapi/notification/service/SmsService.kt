@@ -23,7 +23,7 @@ class SmsService(
         val params = HashMap<String, String>()
         params["to"] = phoneNumber
         params["from"] = senderNumber
-        params["type"] = "SMS"
+        params["type"] = "LMS"
         params["text"] = content
 
         return coolsms.send(params)
