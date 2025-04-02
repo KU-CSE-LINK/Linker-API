@@ -72,6 +72,26 @@ class RentalService(
         val status = RentalStatus.valueOf(rawStatus)
 
         if (rental.status != status) {
+            when (status) {
+                RentalStatus.RENTED -> {
+                    val equipment = rental.equipment
+                    if (equipment.availableStock > 0) {
+                        equipment.availableStock -= 1
+                        equipmentService.updateEquipment(equipment)
+                    } else {
+                        logger.error("기자재 재고 부족: ${equipment.name}, ID: ${equipment.id}")
+                    }
+                }
+
+                RentalStatus.RETURNED -> {
+                    val equipment = rental.equipment
+                    equipment.availableStock += 1
+                    equipmentService.updateEquipment(equipment)
+                }
+
+                else -> {}
+            }
+
             rental.status = status
             val savedRental = rentalRepository.save(rental)
 
@@ -83,7 +103,6 @@ class RentalService(
                     e
                 )
             }
-
             return savedRental
         }
 

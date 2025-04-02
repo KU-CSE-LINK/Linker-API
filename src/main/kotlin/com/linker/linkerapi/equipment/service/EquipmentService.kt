@@ -32,4 +32,8 @@ class EquipmentService(
 
         return equipmentRepository.save(equipment)
     }
+
+    fun updateEquipment(equipment: Equipment): Equipment {
+        return equipmentRepository.save(equipment)
+    }
 }
