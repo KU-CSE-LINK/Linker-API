@@ -18,6 +18,15 @@ class SmsService(
     private val senderNumber: String
 ) {
     private fun sendSms(phoneNumber: String, content: String): JSONObject {
+        val profile = System.getProperty("spring.profiles.active")
+
+        if (profile == "local") {
+            return JSONObject().apply {
+                put("status", "success")
+                put("message", "SMS sent successfully")
+            }
+        }
+
         val coolsms = Message(apiKey, apiSecret)
 
         val params = HashMap<String, String>()
