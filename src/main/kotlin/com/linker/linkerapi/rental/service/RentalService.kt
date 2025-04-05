@@ -69,43 +69,51 @@ class RentalService(
 
     fun changeRentalStatus(id: Long, rawStatus: String): Rental {
         val rental = rentalRepository.findById(id).get()
-        val status = RentalStatus.valueOf(rawStatus)
+        val currentStatus = rental.status
+        val newStatus = RentalStatus.valueOf(rawStatus)
 
-        if (rental.status != status) {
-            when (status) {
-                RentalStatus.RENTED -> {
-                    val equipment = rental.equipment
-                    if (equipment.availableStock > 0) {
-                        equipment.availableStock -= 1
-                        equipmentService.updateEquipment(equipment)
-                    } else {
-                        logger.error("기자재 재고 부족: ${equipment.name}, ID: ${equipment.id}")
-                    }
-                }
-
-                RentalStatus.RETURNED -> {
-                    val equipment = rental.equipment
-                    equipment.availableStock += 1
-                    equipmentService.updateEquipment(equipment)
-                }
-
-                else -> {}
-            }
-
-            rental.status = status
-            val savedRental = rentalRepository.save(rental)
-
-            try {
-                smsService.sendRentalStatusNotification(savedRental)
-            } catch (e: Exception) {
-                logger.error(
-                    "대여 상태 변경 SMS 발송 실패 - 대여ID: ${savedRental.id}, 상태: ${status}, 오류: ${e.message}",
-                    e
-                )
-            }
-            return savedRental
+        if (currentStatus == newStatus) {
+            return rental
         }
 
-        return rental
+        when {
+            (currentStatus == RentalStatus.REQUESTED || currentStatus == RentalStatus.PREPARED) &&
+                    newStatus == RentalStatus.RENTED -> {
+                val equipment = rental.equipment
+                if (equipment.availableStock > 0) {
+                    equipment.availableStock -= 1
+                    equipmentService.updateEquipment(equipment)
+                } else {
+                    logger.error("기자재 재고 부족: ${equipment.name}, ID: ${equipment.id}")
+                    throw IllegalStateException("기자재 재고가 부족합니다: ${equipment.name}")
+                }
+            }
+
+            currentStatus == RentalStatus.RENTED && newStatus == RentalStatus.RETURNED -> {
+                val equipment = rental.equipment
+                equipment.availableStock += 1
+                equipmentService.updateEquipment(equipment)
+            }
+
+            else -> {
+                if (currentStatus == RentalStatus.RETURNED && newStatus == RentalStatus.RENTED) {
+                    throw IllegalStateException("이미 반납된 기자재는 다시 대여 상태로 변경할 수 없습니다.")
+                }
+            }
+        }
+
+        rental.status = newStatus
+        val savedRental = rentalRepository.save(rental)
+
+        try {
+            smsService.sendRentalStatusNotification(savedRental)
+        } catch (e: Exception) {
+            logger.error(
+                "대여 상태 변경 SMS 발송 실패 - 대여ID: ${savedRental.id}, 상태: ${newStatus}, 오류: ${e.message}",
+                e
+            )
+        }
+
+        return savedRental
     }
 }
