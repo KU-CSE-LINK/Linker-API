@@ -48,4 +48,14 @@ class SmsService(
         }
         sendSms(rental.phoneNumber, message)
     }
+
+    fun sendReturnDateReminder(rental: Rental) {
+        val message = """
+        [LINKER 기자재 대여] 안녕하세요, 컴퓨터공학부 학생회 LINK 복지국입니다.
+        대여하신 기자재의 반납 기한이 오늘까지입니다. 아직 반납하지 않으셨다면, 오늘 중으로 과방(공A301)에 방문하여 반납해 주시기 바랍니다.
+        ※ 기한 내 미반납 시 향후 기자재 대여 서비스 이용에 제한이 있을 수 있습니다.
+        감사합니다.
+    """.trimIndent()
+        sendSms(rental.phoneNumber, message)
+    }
 }
