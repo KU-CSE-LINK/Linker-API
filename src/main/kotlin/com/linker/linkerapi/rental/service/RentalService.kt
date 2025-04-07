@@ -71,8 +71,12 @@ class RentalService(
         return rentalRepository.findAllByStudentIdAndName(studentId, name)
     }
 
-    fun getAllRentals(): List<Rental> {
-        return rentalRepository.findAll()
+    fun getAllRentals(status: String?): List<Rental> {
+        if (status != null) {
+            return rentalRepository.findAllByStatusOrderByReturnDate(RentalStatus.valueOf(status))
+        }
+
+        return rentalRepository.findAllByOrderByReturnDate()
     }
 
     @Transactional

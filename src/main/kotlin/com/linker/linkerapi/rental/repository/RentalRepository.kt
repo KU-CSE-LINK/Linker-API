@@ -16,4 +16,8 @@ interface RentalRepository : JpaRepository<Rental, Long> {
         endOfDay: LocalDateTime,
         status: RentalStatus
     ): List<Rental>
+
+    fun findAllByOrderByReturnDate(): List<Rental>
+
+    fun findAllByStatusOrderByReturnDate(status: RentalStatus): List<Rental>
 }

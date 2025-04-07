@@ -18,8 +18,9 @@ class AdminRentalController(
     @GetMapping("/rentals")
     fun getRentals(
         @AdminUsername username: String,
+        @RequestParam status: String?,
     ): List<Rental> {
-        return rentalService.getAllRentals()
+        return rentalService.getAllRentals(status)
     }
 
     @Operation(summary = "대여 단건 조회", description = "대여 신청 내역을 id를 기준으로 조회합니다.")
