@@ -15,7 +15,7 @@ class RentalSchedulerService(
 ) {
     private val logger = LoggerFactory.getLogger(RentalSchedulerService::class.java)
 
-    @Scheduled(cron = "0 0 9 * * ?")
+    @Scheduled(cron = "0 0 12 * * ?", zone = "Asia/Seoul")
     fun sendReturnDateReminders() {
         val today = LocalDate.now()
         val startOfDay = today.atStartOfDay()
@@ -32,7 +32,10 @@ class RentalSchedulerService(
                 smsService.sendReturnDateReminder(rental)
                 logger.info("반납일 알림 문자 발송 성공 - 대여ID: ${rental.id}, 이름: ${rental.name}, 기자재: ${rental.equipment.name}")
             } catch (e: Exception) {
-                logger.error("반납일 알림 문자 발송 실패 - 대여ID: ${rental.id}, 이름: ${rental.name}, 오류: ${e.message}", e)
+                logger.error(
+                    "반납일 알림 문자 발송 실패 - 대여ID: ${rental.id}, 이름: ${rental.name}, 오류: ${e.message}",
+                    e
+                )
             }
         }
     }
