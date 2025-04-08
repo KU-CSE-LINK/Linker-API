@@ -9,9 +9,9 @@ import com.linker.linkerapi.rental.enums.RentalType
 import com.linker.linkerapi.rental.exception.EquipmentNotAvailableException
 import com.linker.linkerapi.rental.exception.RentalNotFoundException
 import com.linker.linkerapi.rental.repository.RentalRepository
-import jakarta.transaction.Transactional
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
