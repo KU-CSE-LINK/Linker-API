@@ -19,7 +19,7 @@ class RentalSchedulerService(
     fun sendReturnDateReminders() {
         val today = LocalDate.now()
         val startOfDay = today.atStartOfDay()
-        val endOfDay = today.plusDays(1).atStartOfDay().minusNanos(1)
+        val endOfDay = today.plusDays(1).atStartOfDay().minusHours(1)
 
         val returnDueRentals = rentalRepository.findAllByReturnDateBetweenAndStatus(
             startOfDay,
