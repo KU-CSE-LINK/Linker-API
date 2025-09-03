@@ -51,8 +51,6 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/linker-server
           platforms: |
             linux/amd64
-            linux/arm64
-            linux/arm/v7
 
       - name: Deploy
         uses: appleboy/ssh-action@master
