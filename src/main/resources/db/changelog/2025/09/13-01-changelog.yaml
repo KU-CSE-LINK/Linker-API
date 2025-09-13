@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250913-1
+      author: wook
+      changes:
+        - createTable:
+            tableName: locker
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+              - column:
+                  name: locker_name
+                  type: VARCHAR(255)
+              - column:
+                  name: location
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  name: student_id
+                  type: BIGINT
