@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250914-1
+      author: wook
+      comment: "Load initial locker data from csv"
+      changes:
+        - loadData:
+            tableName: locker
+            file: db/data/lockers.csv
+            encoding: UTF-8
+            separator: ','
+            quotchar: '"'
+            columns:
+              - column: { header: "locker_name", name: "locker_name", type: "STRING" }
+              - column: { header: "location", name: "location", type: "STRING" }
+              - column: { header: "status", name: "status", type: "STRING" }
