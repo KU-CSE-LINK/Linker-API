@@ -7,16 +7,14 @@ data class LockerResponse(
     val id: Long,
     val lockerName: String,
     val location: String,
-    val status: LockerStatus,
-    val studentId: Long?
+    val status: LockerStatus
 ) {
     companion object {
         fun from(locker: Locker) = LockerResponse(
             id = locker.id,
             lockerName = locker.lockerName,
             location = locker.location,
-            status = locker.status,
-            studentId = locker.studentId
+            status = locker.status
         )
     }
 }
