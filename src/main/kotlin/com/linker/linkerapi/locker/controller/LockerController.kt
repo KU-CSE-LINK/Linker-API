@@ -1,6 +1,7 @@
 package com.linker.linkerapi.locker.controller
 
 import com.linker.linkerapi.locker.dto.LockerResponse
+import com.linker.linkerapi.locker.dto.RentLockerRequest
 import com.linker.linkerapi.locker.service.LockerService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -26,8 +27,8 @@ class LockerController(private val lockerService: LockerService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun rentLocker(
         @PathVariable lockerId: Long,
-        @RequestParam studentId: Long
-    ): LockerResponse = lockerService.rentLocker(lockerId, studentId)
+        @RequestBody request: RentLockerRequest
+    ): LockerResponse = lockerService.rentLocker(lockerId, request)
 
     @Operation(summary = "사물함 반납")
     @PostMapping("/return")
