@@ -1,7 +1,7 @@
 package com.linker.linkerapi.locker.service
 
 import com.linker.linkerapi.locker.dto.LockerResponse
-import com.linker.linkerapi.locker.dto.RentLockerRequest // import 추가
+import com.linker.linkerapi.locker.dto.RentLockerRequest
 import com.linker.linkerapi.locker.entity.Locker
 import com.linker.linkerapi.locker.enums.LockerStatus
 import com.linker.linkerapi.locker.exception.LockerAlreadyRentedException
