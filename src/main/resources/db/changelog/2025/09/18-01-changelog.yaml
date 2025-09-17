@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250918-1
+      author: wook
+      comment: "Add user_name and phone_number to locker table"
+      changes:
+        - addColumn:
+            tableName: locker
+            columns:
+              - column:
+                  name: user_name
+                  type: VARCHAR(255)
+        - addColumn:
+            tableName: locker
+            columns:
+              - column:
+                  name: phone_number
+                  type: VARCHAR(255)

@@ -1,6 +1,7 @@
 package com.linker.linkerapi.locker.service
 
 import com.linker.linkerapi.locker.dto.LockerResponse
+import com.linker.linkerapi.locker.dto.RentLockerRequest // import 추가
 import com.linker.linkerapi.locker.entity.Locker
 import com.linker.linkerapi.locker.enums.LockerStatus
 import com.linker.linkerapi.locker.exception.LockerAlreadyRentedException
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class LockerService(private val lockerRepository: LockerRepository) {
 
     fun getAllLockers(): List<LockerResponse> =
-        lockerRepository.findAll().map { LockerResponse.from(it) }
+        lockerRepository.findAllByOrderByIdAsc().map { LockerResponse.from(it) }
 
     fun getLockerByStudentId(studentId: Long): LockerResponse {
         val locker = lockerRepository.findByStudentId(studentId)
@@ -22,16 +23,18 @@ class LockerService(private val lockerRepository: LockerRepository) {
     }
 
     @Transactional
-    fun rentLocker(lockerId: Long, studentId: Long): LockerResponse {
-        val locker = validateRentalRequest(lockerId, studentId)
+    fun rentLocker(lockerId: Long, request: RentLockerRequest): LockerResponse {
+        val locker = validateLockerRentalPreconditions(lockerId, request.studentId)
 
         locker.status = LockerStatus.RENTED
-        locker.studentId = studentId
+        locker.studentId = request.studentId
+        locker.userName = request.userName
+        locker.phoneNumber = request.phoneNumber
         return LockerResponse.from(lockerRepository.save(locker))
     }
 
-    private fun validateRentalRequest(lockerId: Long, studentId: Long): Locker {
-        lockerRepository.findByStudentId(studentId)?.let {
+    private fun validateLockerRentalPreconditions(lockerId: Long, studentId: Long): Locker {
+        if (lockerRepository.findByStudentId(studentId) != null) {
             throw LockerAlreadyRentedException()
         }
 
@@ -51,6 +54,8 @@ class LockerService(private val lockerRepository: LockerRepository) {
 
         locker.status = LockerStatus.AVAILABLE
         locker.studentId = null
+        locker.userName = null
+        locker.phoneNumber = null
         lockerRepository.save(locker)
     }
 
@@ -60,8 +65,10 @@ class LockerService(private val lockerRepository: LockerRepository) {
             .orElseThrow { LockerNotFoundException() }
 
         locker.status = status
-        if (status == LockerStatus.AVAILABLE) {
+        if (status != LockerStatus.RENTED) {
             locker.studentId = null
+            locker.userName = null
+            locker.phoneNumber = null
         }
         return LockerResponse.from(lockerRepository.save(locker))
     }

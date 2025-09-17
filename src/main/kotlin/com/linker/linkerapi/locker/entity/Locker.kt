@@ -12,5 +12,7 @@ class Locker(
     val location: String,
     @Enumerated(EnumType.STRING)
     var status: LockerStatus = LockerStatus.AVAILABLE,
-    var studentId: Long? = null
+    var studentId: Long? = null,
+    var userName: String? = null,
+    var phoneNumber: String? = null
 ) : BaseEntity()
